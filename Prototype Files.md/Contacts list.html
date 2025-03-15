@@ -1,0 +1,126 @@
+<html lang="en">
+ <header>
+    <title>Prototype Email Automation</title>
+ </header>
+ <head>
+  <style>
+    table{
+      border-collapse: collapse;
+    }
+    th,td{
+      border: 1px solid black;
+      padding: 8px;
+      text-align:center;
+    }
+    th{
+      background-color: black;
+      color: white;
+    }
+  </style>
+ </head>
+  <body>
+    <h2 style="text-align:center">Prototype Email Automation</h2>
+    
+  <h3>Things to add</h3>
+  <li>Email contacts list with an option to filter by contract end date</li>
+  <li>Side bar with :
+    <ol> Send emails/program emails</ol>
+    <ol>Receive notifications about any contracts that need to be renewed soon or any emails from contacts</ol>
+  </li>
+  <li>Add a form so the client can add contacts using a HTML form instead of typing in the json file</li>
+  <input type="text" id="myInput" onkeyup="myFunction()" size="40" placeholder="Search for an end date in this format(dd/mm/yyyy)">
+  <div>
+   <table id="myTable">
+       <thead>
+          <tr>
+            <th>Product</th>
+            <th>Supplier</th>
+            <th>End Date</th>
+            <th>Email</th>
+          </tr>
+       </thead>
+       <tbody>
+
+       </tbody>
+   </table>
+   </div>
+  <script>
+    var contacts=[
+    { 
+    "product":"Blackboard",
+    "supplier":"BlackboardInc",
+    "end_date":"20/05/2025",
+    "email":"example@gmail.com"
+    },
+    {
+    "product":"Microsoft 360",
+    "supplier":"Microsoft",
+    "end_date":"13/03/2026",
+    "email":"microsoft@outlook.com"
+    },
+    {
+    "product":"O'Really learning",
+    "supplier":"O'Really Learning",
+    "end_date":"13/04/2026",
+    "email":"oreallylearning@gmail.com"
+    },
+    {
+      "product":"Monitor",
+      "supplier":"Dell",
+      "end_date":"09/05/2026",
+      "email":"dell@gmail.com"
+    },
+    {
+      "product":"Apps Anywhere",
+      "supplier":"Apps Anywhere",
+      "end_date":"1/07/2027",
+      "email":"appsanywhere@gmail.com"
+    }
+  ];
+  const tableBody = document.querySelector("#myTable tbody");
+  contacts.forEach(contact=>{
+    const row=document.createElement('tr');
+
+    const productCell = document.createElement('td');
+    productCell.textContent = contact.product;
+    row.appendChild(productCell);
+
+    const supplierCell = document.createElement('td');
+    supplierCell.textContent = contact.supplier;
+    row.appendChild(supplierCell);
+
+    const end_dateCell = document.createElement('td');
+    end_dateCell.textContent = contact.end_date;
+    row.appendChild(end_dateCell);
+
+    const emailCell = document.createElement('td');
+    emailCell.textContent = contact.email;
+    row.appendChild(emailCell);
+
+    tableBody.appendChild(row);
+  });
+
+  function myFunction() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[2];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+  </script>
+  </body>
+</html>
