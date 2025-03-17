@@ -3,31 +3,16 @@
     <title>Prototype Email Automation</title>
  </header>
  <head>
-  <style>
-    table{
-      border-collapse: collapse;
-    }
-    th,td{
-      border: 1px solid black;
-      padding: 8px;
-      text-align:center;
-    }
-    th{
-      background-color: black;
-      color: white;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
  </head>
   <body>
     <h2 style="text-align:center">Prototype Email Automation</h2>
-    
-  <h3>Things to add</h3>
-  <li>Email contacts list with an option to filter by contract end date</li>
-  <li>Side bar with :
-    <ol> Send emails/program emails</ol>
-    <ol>Receive notifications about any contracts that need to be renewed soon or any emails from contacts</ol>
-  </li>
-  <li>Add a form so the client can add contacts using a HTML form instead of typing in the json file</li>
+    <div id="sidemenu">
+      <span style="font-size:25px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+    </div>
+<br><br><br>
+<button style="width: 150px; height: 30px; border-radius:10px;margin-bottom:10px; cursor:pointer;">Make a new contact</button>
+<br>
   <input type="text" id="myInput" onkeyup="myFunction()" size="40" placeholder="Search for an end date in this format(dd/mm/yyyy)">
   <div>
    <table id="myTable">
@@ -44,7 +29,20 @@
        </tbody>
    </table>
    </div>
+  
+   <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="Emails.html">Send/Program Emails</a>
+    <a href="#">Notifications</a>
+    <a href="#">Email Templates</a>
+  </div>
+
+<div id="new-contact">
+
+
+</div>
   <script>
+    //Dictionary with the client contacts
     var contacts=[
     { 
     "product":"Blackboard",
@@ -75,8 +73,15 @@
       "supplier":"Apps Anywhere",
       "end_date":"1/07/2027",
       "email":"appsanywhere@gmail.com"
+    },
+    {
+      "product":"Maintenance",
+      "supplier":"Lancer Scott",
+      "end_date":"20/05/2027",
+      "email":"lancerscott@gmail.com"
     }
   ];
+  //Get the data from the dictionary and into the table 
   const tableBody = document.querySelector("#myTable tbody");
   contacts.forEach(contact=>{
     const row=document.createElement('tr');
@@ -120,6 +125,14 @@
         }
       }
     }
+  }
+ //Side bar menu
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+  
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
   }
   </script>
   </body>
