@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notifications</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .header a {
+      margin-right: 10px;
+      text-decoration: none;
+      color: blue;
+    }
+    h2 {
+      margin: 0;
+    }
+    h3 {
+      margin-top: 20px;
+    }
+    .notification {
+      border: 1px solid #ccc;
+      background-color: #fff;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+    .popup {
+      background-color: #ffdddd;
+      border-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Notifications</h2>
+    <div>
+      <!-- Linking the pages together -->
+      <a href="Contacts list.html">Contacts List</a>
+      <a href="FormEmail.html">Email System</a>
+    </div>
+  </div>
+
+  <div id="notifications-container">
+    <!-- Notifications will appear here -->
+  </div>
+
+  <script>
+    /* ========= Email Notifications Section ========= */
+    // In a real scenario, you might use shared storage or backend events.
+    // Here we simulate by using a sample list.
+    const emailNotifications = [
+      "Email sent by client: example@gmail.com",
+      "Email sent by customer: customer@example.com"
+    ];
+    
+    function displayEmailNotifications() {
+      if(emailNotifications.length > 0) {
+        const container = document.getElementById("notifications-container");
+        const header = document.createElement("h3");
+        header.textContent = "Email Notifications";
+        container.appendChild(header);
+        
+        emailNotifications.forEach(msg => {
+          const div = document.createElement("div");
+          div.className = "notification";
+          div.textContent = msg;
+          container.appendChild(div);
+        });
+      }
+    }
+
+    /* ========= Contract Renewal Alert Section ========= */
+    // Copying the contacts array from your "Contacts list.html" file.
+    const contacts = [
+      { "product": "Blackboard", "supplier": "BlackboardInc", "end_date": "20/05/2025", "email": "example@gmail.com" },
+      { "product": "Microsoft 360", "supplier": "Microsoft", "end_date": "13/03/2026", "email": "microsoft@outlook.com" },
+      { "product": "O'Really learning", "supplier": "O'Really Learning", "end_date": "13/04/2026", "email": "oreallylearning@gmail.com" },
+      { "product": "Monitor", "supplier": "Dell", "end_date": "09/05/2026", "email": "dell@gmail.com" },
+      { "product": "Apps Anywhere", "supplier": "Apps Anywhere", "end_date": "1/07/2027", "email": "appsanywhere@gmail.com" },
+      { "product": "Maintenance", "supplier": "Lancer Scott", "end_date": "20/05/2027", "email": "lancerscott@gmail.com" }
+    ];
+    
+    // Utility: Parse date string in dd/mm/yyyy format.
+    function parseDate(dateStr) {
+      const parts = dateStr.split("/");
+      return new Date(parts[2], parts[1] - 1, parts[0]);
+    }
+    
+    // Check for contracts that need renewal based on a threshold.
+    // Here, we set a threshold of 45 days.
+    function checkContractRenewals() {
+      const now = new Date();
+      const threshold = 45 * 24 * 60 * 60 * 1000; // 45 days in milliseconds.
+      let renewals = [];
+      
+      contacts.forEach(contact => {
+        const endDate = parseDate(contact.end_date);
+        const diff = endDate - now;
+        if(diff > 0 && diff <= threshold) {
+          renewals.push(`Contract for ${contact.product} from ${contact.supplier} is due for renewal on ${contact.end_date}.`);
+        }
+      });
+      
+      return renewals;
+    }
+    
+    function displayContractRenewals() {
+      const renewals = checkContractRenewals();
+      if(renewals.length > 0) {
+        const container = document.getElementById("notifications-container");
+        const header = document.createElement("h3");
+        header.textContent = "Contract Renewal Alerts";
+        container.appendChild(header);
+        
+        renewals.forEach(msg => {
+          // Create an in-page notification without a popup
+          const div = document.createElement("div");
+          div.className = "notification popup";
+          div.textContent = msg;
+          container.appendChild(div);
+        });
+      }
+    }
+    
+    /* ========= Initialize Notifications on Load ========= */
+    window.onload = function() {
+      displayEmailNotifications();
+      displayContractRenewals();
+    }
+  </script>
+</body>
+</html>
