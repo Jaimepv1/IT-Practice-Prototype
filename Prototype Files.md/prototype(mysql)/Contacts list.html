@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacts List</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background-color: #f9f9f9; }
+    h2 { text-align: center; color: #333; }
+    #sidemenu span { font-size: 25px; cursor: pointer; color: #333; }
+    button { width: 150px; height: 30px; border-radius: 10px; margin-bottom: 10px; cursor: pointer;
+      background-color: #4CAF50; color: white; border: none; transition: background-color 0.3s; }
+    button:hover { background-color: #45A049; }
+    #myInput { width: calc(100% - 20px); padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
+    #myTable { width: 100%; border-collapse: collapse; background-color: #fff; }
+    #myTable th, #myTable td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
+    #myTable tr:nth-child(even) { background-color: #f2f2f2; }
+    .sidenav { height: 100%; width: 0; position: fixed; z-index: 1; top: 0; left: 0;
+      background-color: #111; overflow-x: hidden; transition: 0.5s; padding-top: 60px; }
+    .sidenav a { padding: 8px 8px 8px 32px; text-decoration: none; color: #818181;
+      display: block; transition: 0.3s; }
+    .sidenav a:hover { color: #f1f1f1; }
+    .sidenav .closebtn { position: absolute; top: 0; right: 25px; font-size: 36px; margin-left: 50px; color: white; }
+  </style>
+</head>
+<body>
+  <h2>Contacts List</h2>
+  <div id="sidemenu">
+    <span onclick="openNav()">&#9776; Menu</span>
+  </div>
+
+  <button onclick="location.href='new_contact.html'">Make a new contact</button>
+  <br>
+
+  <input type="text" id="myInput" onkeyup="filterByDate()" placeholder="Search for an end date (dd/mm/yyyy)">
+
+  <table id="myTable">
+    <thead>
+      <tr><th>Product</th><th>Supplier</th><th>End Date</th><th>Email</th></tr>
+    </thead>
+    <tbody>
+      <!-- Populated dynamically -->
+    </tbody>
+  </table>
+
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="Contacts list.html">Contacts List</a>
+    <a href="Emails.html">Send/Program Emails</a>
+    <a href="Notification.html">Notifications</a>
+    <a href="FormEmail.html">Email Templates</a>
+  </div>
+
+  <script>
+    // Load contacts and sort by nearest end_date first
+    function loadContacts() {
+      fetch('get_contacts.php')
+        .then(res => res.json())
+        .then(contacts => {
+          // Sort contacts by end_date (dd/mm/yyyy)
+          contacts.sort((a, b) => {
+            const [da, ma, ya] = a.end_date.split('/').map(Number);
+            const [db, mb, yb] = b.end_date.split('/').map(Number);
+            return new Date(ya, ma - 1, da) - new Date(yb, mb - 1, db);
+          });
+          const tbody = document.querySelector('#myTable tbody');
+          tbody.innerHTML = '';
+          contacts.forEach(c => {
+            const row = document.createElement('tr');
+            ['product','supplier','end_date','email'].forEach(key => {
+              const td = document.createElement('td');
+              td.textContent = c[key];
+              row.appendChild(td);
+            });
+            tbody.appendChild(row);
+          });
+        })
+        .catch(err => console.error('Error fetching contacts:', err));
+    }
+
+    // Filter rows by end date
+    function filterByDate() {
+      const filter = document.getElementById('myInput').value.toUpperCase();
+      document.querySelectorAll('#myTable tbody tr').forEach(row => {
+        const dateText = row.cells[2].textContent.toUpperCase();
+        row.style.display = dateText.includes(filter) ? '' : 'none';
+      });
+    }
+
+    function openNav() { document.getElementById('mySidenav').style.width = '250px'; }
+    function closeNav() { document.getElementById('mySidenav').style.width = '0'; }
+
+    // Initialize table
+    document.addEventListener('DOMContentLoaded', loadContacts);
+  </script>
+</body>
+</html>

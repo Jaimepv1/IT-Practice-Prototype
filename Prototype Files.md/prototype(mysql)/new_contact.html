@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Contact</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background-color: #f9f9f9; }
+    h2 { text-align: center; color: #333; }
+    form { max-width: 400px; margin: auto; background: #fff; padding: 20px; border-radius: 5px; }
+    form input { width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
+    .actions { text-align: right; }
+    .actions button { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; }
+    .actions .cancel { background: #ddd; margin-right: 10px; }
+    .actions .submit { background: #4CAF50; color: #fff; }
+    .actions .submit:hover { background: #45A049; }
+  </style>
+</head>
+<body>
+  <h2>Add New Contact</h2>
+  <form action="add_contact.php" method="post">
+    <input type="text" name="product" placeholder="Product" required>
+    <input type="text" name="supplier" placeholder="Supplier" required>
+    <input type="date" name="end_date" placeholder="End Date" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <div class="actions">
+      <button type="button" class="cancel" onclick="history.back()">Cancel</button>
+      <button type="submit" class="submit">Confirm</button>
+    </div>
+  </form>
+</body>
+</html>
+
