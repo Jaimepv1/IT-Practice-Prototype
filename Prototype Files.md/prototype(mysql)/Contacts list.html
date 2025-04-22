@@ -52,46 +52,70 @@
   </div>
 
   <script>
-    // Load contacts and sort by nearest end_date first
+    // Parse a dd/mm/yyyy string into a Date
+    function parseDate(dateStr) {
+      const [day, month, year] = dateStr.split("/").map(Number);
+      return new Date(year, month - 1, day);
+    }
+  
+    // Days from now until the given dd/mm/yyyy
+    function daysUntil(dateStr) {
+      const now = new Date();
+      return (parseDate(dateStr) - now) / (1000 * 60 * 60 * 24);
+    }
+  
+    // Load, sort, highlight, and render contacts
     function loadContacts() {
       fetch('get_contacts.php')
         .then(res => res.json())
         .then(contacts => {
-          // Sort contacts by end_date (dd/mm/yyyy)
-          contacts.sort((a, b) => {
-            const [da, ma, ya] = a.end_date.split('/').map(Number);
-            const [db, mb, yb] = b.end_date.split('/').map(Number);
-            return new Date(ya, ma - 1, da) - new Date(yb, mb - 1, db);
-          });
+          // Sort by end_date ascending
+          contacts.sort((a, b) =>
+            parseDate(a.end_date) - parseDate(b.end_date)
+          );
+  
           const tbody = document.querySelector('#myTable tbody');
           tbody.innerHTML = '';
+  
           contacts.forEach(c => {
             const row = document.createElement('tr');
-            ['product','supplier','end_date','email'].forEach(key => {
+  
+            // Highlight if renewing within 45 days
+            const daysLeft = daysUntil(c.end_date);
+            if (daysLeft > 0 && daysLeft <= 45) {
+              row.style.backgroundColor = '#ffdddd';
+              row.style.color = 'red';
+            }
+  
+            // Build cells
+            ['product', 'supplier', 'end_date', 'email'].forEach(key => {
               const td = document.createElement('td');
               td.textContent = c[key];
               row.appendChild(td);
             });
+  
             tbody.appendChild(row);
           });
         })
         .catch(err => console.error('Error fetching contacts:', err));
     }
-
-    // Filter rows by end date
+  
+    // Filter by date substring
     function filterByDate() {
       const filter = document.getElementById('myInput').value.toUpperCase();
       document.querySelectorAll('#myTable tbody tr').forEach(row => {
-        const dateText = row.cells[2].textContent.toUpperCase();
-        row.style.display = dateText.includes(filter) ? '' : 'none';
+        row.style.display = row.cells[2].textContent.toUpperCase().includes(filter)
+          ? ''
+          : 'none';
       });
     }
-
+  
+    // Side‑nav handlers
     function openNav() { document.getElementById('mySidenav').style.width = '250px'; }
     function closeNav() { document.getElementById('mySidenav').style.width = '0'; }
-
-    // Initialize table
+  
+    // Kick everything off
     document.addEventListener('DOMContentLoaded', loadContacts);
-  </script>
+  </script>  
 </body>
 </html>
