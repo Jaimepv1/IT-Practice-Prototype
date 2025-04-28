@@ -100,7 +100,7 @@
         .catch(err => console.error('Error fetching contacts:', err));
     }
   
-    // Filter by date substring
+    // Filter by date, supplier, product substring
     function filterContacts() {
       const filter = document.getElementById('myInput').value.toUpperCase();
       document.querySelectorAll('#myTable tbody tr').forEach(row => {
