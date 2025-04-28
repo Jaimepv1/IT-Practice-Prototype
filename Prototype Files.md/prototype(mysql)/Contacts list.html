@@ -32,7 +32,7 @@
   <button onclick="location.href='new_contact.html'">Make a new contact</button>
   <br>
 
-  <input type="text" id="myInput" onkeyup="filterByDate()" placeholder="Search for an end date (dd/mm/yyyy)">
+  <input type="text" id="myInput" onkeyup="filterContacts()" placeholder="Search by product, supplier or date (dd/mm/yyyy)">
 
   <table id="myTable">
     <thead>
@@ -101,12 +101,23 @@
     }
   
     // Filter by date substring
-    function filterByDate() {
+    function filterContacts() {
       const filter = document.getElementById('myInput').value.toUpperCase();
       document.querySelectorAll('#myTable tbody tr').forEach(row => {
-        row.style.display = row.cells[2].textContent.toUpperCase().includes(filter)
-          ? ''
-          : 'none';
+        const product  = row.cells[0].textContent.toUpperCase();
+        const supplier = row.cells[1].textContent.toUpperCase();
+        const endDate  = row.cells[2].textContent.toUpperCase();
+
+        // show row if ANY cell contains the filter text
+        if (
+          product.includes(filter) ||
+          supplier.includes(filter) ||
+          endDate.includes(filter)
+        ) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
       });
     }
   
