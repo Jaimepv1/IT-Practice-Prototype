@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Send an email</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body {font-family: Arial, Helvetica, sans-serif;}
+  * {box-sizing: border-box;}
+
+  input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+   }
+
+  input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+   }
+
+  input[type=submit]:hover {
+  background-color: #45a049;
+   }
+
+ .container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+   }
+ </style>
+</head>
+  <body>
+
+<h3 style="text-align:center;padding-top:20px;"><u>Send an email</u></h3>
+<button style="margin-bottom:20px;">Back to menu</button>
+    <div class="container">
+      <form action="/send_email.php">
+        <label for="receiver">To</label>
+        <input type="text" id="receiver" name="receiver" placeholder="To" required>
+
+        <label for="subject">Subject of the email</label>
+        <input type="text" id="subject" name="subject" placeholder="Subject of the email">
+
+        <label for="enquiry"> Enquiry of the email</label>
+        <select id="enquiry" name="enquiry">
+          <option value="renewal">Email renewal</option>
+          <option value="late-renewal">Late email renewal</option>
+          <option value="contract-cancellation">Contract cancellation</option>
+          <option value="other">Other enquiry</option>
+        </select>
+        
+        <textarea id="text" name="text" placeholder="Type something" style="height:200px;"></textarea>
+        
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+ </body>
+</html>
+
+
+<!-- php file send_email.php
+<?php
+ if($_SERVER['REQUEST_METHOD'] =='POST') {
+    $receiver = htmlspecialchars($_POST['receiver']);
+    $subject = htmlspecialchars($_POST['subject']);
+    $enquiry = htmlspecialchars($_POST['enquiry']);
+    $text = htmlspecialchars($_POST['text']);
+    
+ }
+?>
+
+<?php
+    $to = "your-email@example.com"; // Replace with your email address
+    $subject = "Contact Form Submission from $name";
+    $headers = "From: $email\r\n";
+    $headers .= "Reply-To: $email\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    
+    $body = "Name: $name\nEmail: $email\n\nMessage:\n$message";
+    
+    if (mail($to, $subject, $body, $headers)) {
+        echo "Email successfully sent!";
+    } else {
+        echo "Failed to send email.";
+    }
+}
+?>
+
+
+-->
+
+
+
+
+
