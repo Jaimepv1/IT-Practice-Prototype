@@ -2,7 +2,7 @@
 // Connect to database
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "!Rr201612066";
 $dbname = "contacts_list";
 
 $conn = new mysqli($servername, $username, $password, $dbname);

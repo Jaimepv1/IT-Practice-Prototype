@@ -47,7 +47,7 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <a href="Contacts list.html">Contacts List</a>
     <a href="Notification.html">Notifications</a>
-    <a href="FormEmail.html">Email Templates</a>
+    <a href="FormEmail.php">Email Templates</a>
   </div>
 
   <script>
@@ -99,7 +99,7 @@
         .catch(err => console.error('Error fetching contacts:', err));
     }
   
-    // Filter by date, supplier, product substring
+    // Filter by date substring
     function filterContacts() {
       const filter = document.getElementById('myInput').value.toUpperCase();
       document.querySelectorAll('#myTable tbody tr').forEach(row => {

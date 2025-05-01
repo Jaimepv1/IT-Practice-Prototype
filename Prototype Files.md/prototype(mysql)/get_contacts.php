@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $user = "root";
-$password = "enter your own password";
+$password = "!Rr201612066";
 $dbname = "contacts_list";
 
 $conn = new mysqli($host, $user, $password, $dbname);

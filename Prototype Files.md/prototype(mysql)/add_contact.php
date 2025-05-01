@@ -3,7 +3,7 @@
 // DB credentials
 $host = 'localhost';
 $user = 'root';
-$pass = 'password';
+$pass = '!Rr201612066';
 $db   = 'contacts_list';
 
 // Connect
