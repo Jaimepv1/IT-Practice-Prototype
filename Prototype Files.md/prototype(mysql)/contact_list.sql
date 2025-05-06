@@ -11,6 +11,17 @@ CREATE TABLE IF NOT EXISTS contacts (
   email VARCHAR(100) NOT NULL
 );
 
+CREATE TABLE `sent_emails` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `recipient` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `subject`   VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `message`   TEXT            CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `sent_at`   TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
+
+
+
 -- 3. Insert the sample contacts
 INSERT INTO contacts (product, supplier, end_date, email) VALUES
   ('Blackboard',        'BlackboardInc',      '2025-05-20', 'example@gmail.com'),
